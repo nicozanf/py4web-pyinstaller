@@ -1,6 +1,10 @@
 # py4web-pyinstaller
 How to make py4web binaries for Windows and MacOS with PY3 and pyinstaller
 
+The binaries contain Python 64 bit version 3.7.4 with all the needed modules
+and the py4web in the specified version. You don't need anything else to run them!
+
+
 **********************************************************************************
 Please, help with testing. Write the results directly to me (nicozanf@gmail.com)   
 **********************************************************************************  
