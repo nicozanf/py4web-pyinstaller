@@ -19,7 +19,7 @@ complex / unusual development.
 
 ## Status
 
-The binaries for Windows are already working, but they seem to have some problem with the Edge browser (just don't use it). 
+The binaries for Windows are already working, but they seem to have some problem with the Edge browser (just don't use it).  
 the Mac version is still in progress.
 
 ## Instructions
