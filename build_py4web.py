@@ -1,10 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# up to 2019, we have used py2applet, py2exe and bbfreeze for building py4web binaries
-# The original scripts can be found on GitHub for py4web up to version 2.18.4
-# See also Niphlod's work on http://www.py4webslices.com/slice/show/1726/build-windows-binaries
-# Then we switched to Pyinstaller in order to fully support Python 3
 
 from distutils.core import setup
 #from gluon.import_all import base_modules, contributed_modules
@@ -64,15 +60,12 @@ def recursive_zip(zipf, directory, folder=""):
                 zipf, os.path.join(directory, item), folder + os.sep + item)
 
 
-# read py4web version from VERSION file
-#py4web_version_line = readlines_file('VERSION')[0]
-# use regular expression to get just the version number
-#v_re = re.compile('[0-9]+\.[0-9]+\.[0-9]+')
-#py4web_version = v_re.search(py4web_version_line).group(0)
-py4web_version = '20200326'
-
 # Python base version
 python_version = sys.version_info[:3]
+
+# py4web version
+from py4web import __version__
+py4web_version = __version__
 
 
 if os_version == 'Windows':
@@ -84,7 +77,7 @@ if os_version == 'Windows':
         zip_filename = 'py4web_win_debug'
     else: # normal run    
         subprocess.call('pyinstaller --clean  py4web-start.win.spec')
-        zip_filename = 'py4web_win'
+        zip_filename = 'py4web_win_' + py4web_version
 
     source = 'dist/py4web-start/'
     for files in os.listdir(source):
@@ -107,10 +100,10 @@ elif os_version == 'Darwin':
         # cleanup + move binary files to dist folder
         #shutil.rmtree(os.path.join('dist', 'py4web'))
         shutil.rmtree('build')
-        zip_filename = 'py4web_osx'
+        zip_filename = 'py4web_osx_'  + py4web_version
 
     shutil.move((os.path.join('dist', 'py4web-start')),(os.path.join('dist', 'py4web_cmd')))
-    bin_folders = [(os.path.join('dist', 'py4web_cmd')),]
+    bin_folders = [(os.path.join('dist', 'py4web_cmd'))]
 
 print("\npy4web binary successfully built!\n")
 
@@ -151,8 +144,8 @@ zipf.close()
 shutil.rmtree('zip_temp')
 shutil.rmtree('dist')
 
-
-print("Your binary version of py4web can be found in " + \
+print('... Done!\n')
+print("\n\nYour binary version of py4web can be found in " + \
     zip_filename + ".zip")
-print("You may extract the archive anywhere and then run py4web without worrying about dependency")
+print("You may extract the archive anywhere and then run py4web without worrying about module dependencies")
 print("\nEnjoy binary py4web " + py4web_version + "\n with embedded Python " + sys.version + "\n")
