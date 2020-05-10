@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from distutils.core import setup
 #from gluon.import_all import base_modules, contributed_modules
 #from gluon.fileutils import readlines_file
@@ -26,16 +25,8 @@ Usage:
     
     (tested with python 3.7.4 with PyInstaller 3.6)
 """
-BUILD_DEBUG = False
-"""
-If BUILD_DEBUG is set to False, no gluon modules will be embedded inside the binary py4web.exe. 
-    Thus, you can easily update the build version by changing the gluon folder inside the resulting ZIP file.
-In case of problem , set BUILD_DEBUG to True. Then all the gluon modules will be analyzed and embedded, too.
-    You can later analyze the .exe with 'pyi-archive_viewer py4web-start.exe' and then 'o PYZ-00.pyz'
-    in order to check for missing system modules to be manually inserted in the SPEC file
- """
 
-if len(sys.argv) != 1 or not os.path.isfile('py4web-start.py'):
+if len(sys.argv) != 1 or not os.path.isfile('py4web.py'):
     print(USAGE)
     sys.exit(1)
 os_version = platform.system()
@@ -67,23 +58,22 @@ python_version = sys.version_info[:3]
 from py4web import __version__
 py4web_version = __version__
 
+# there is a problem with py4web.py that has the same name of the py4web folder/package
+# so we need to rename it before (and back to py4web at the end ...) in order to avoid
+# namespace problems at runtime
+os.rename('py4web.py', 'py4web-start.py')
 
 if os_version == 'Windows':
     print("\nBuilding binary py4web for Windows\n")
-    if BUILD_DEBUG: # debug only
-        subprocess.call('pyinstaller --clean  --icon=extras/icons/py4web.ico \
-                        --hidden-import=site-packages --hidden-import=gluon.packages.dal.pydal \
-                        --hidden-import=gluon.packages.yatl.yatl py4web-start.py')
-        zip_filename = 'py4web_win_debug'
-    else: # normal run    
-        subprocess.call('pyinstaller --clean  py4web-start.win.spec')
-        zip_filename = 'py4web_win_' + py4web_version
+    subprocess.call('pyinstaller --clean  py4web-start.win.spec')
+    zip_filename = 'py4web_win_' + py4web_version
 
     source = 'dist/py4web-start/'
     for files in os.listdir(source):
         shutil.move(os.path.join(source, files), 'dist')
     shutil.rmtree(source)
     os.unlink('dist/py4web-start.exe.manifest')
+    os.rename('dist/py4web-start.exe', 'dist/py4web.exe',)
 
     bin_folders = ['dist',]
 
@@ -91,18 +81,15 @@ if os_version == 'Windows':
 elif os_version == 'Darwin':
     print("\nBuilding binary py4web for MacOS\n")
 
-    if BUILD_DEBUG: #debug only    
-        subprocess.call("pyinstaller --clean --icon=extras/icons/py4web.icns --hidden-import=gluon.packages.dal.pydal  --hidden-import=gluon.packages.yatl.yatl \
-                        --hidden-import=site-packages --windowed py4web.py", shell=True)
-        zip_filename = 'py4web_osx_debug'
-    else: # normal run
-        subprocess.call("pyinstaller --clean py4web-start.mac.spec", shell=True)
-        # cleanup + move binary files to dist folder
-        #shutil.rmtree(os.path.join('dist', 'py4web'))
-        shutil.rmtree('build')
-        zip_filename = 'py4web_osx_'  + py4web_version
+    subprocess.call("pyinstaller --clean py4web-start.mac.spec", shell=True)
+    # cleanup + move binary files to dist folder
+    #shutil.rmtree(os.path.join('dist', 'py4web'))
+    shutil.rmtree('build')
+    zip_filename = 'py4web_osx_'  + py4web_version
 
     shutil.move((os.path.join('dist', 'py4web-start')),(os.path.join('dist', 'py4web_cmd')))
+    os.rename('dist/py4web_cmd/py4web-start', 'dist/py4web_cmd/py4web',)
+    
     bin_folders = [(os.path.join('dist', 'py4web_cmd'))]
 
 print("\npy4web binary successfully built!\n")
@@ -149,3 +136,5 @@ print("\n\nYour binary version of py4web can be found in " + \
     zip_filename + ".zip")
 print("You may extract the archive anywhere and then run py4web without worrying about module dependencies")
 print("\nEnjoy binary py4web " + py4web_version + "\n with embedded Python " + sys.version + "\n")
+
+os.rename('py4web-start.py', 'py4web.py')
