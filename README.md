@@ -23,6 +23,6 @@ The binaries work fine, with no problem reported. The Mac version is CMD only; u
 
 ## How to use them
 
-Just downoad the correct zip file and uncompress it on a folder. Goto that folder and run 'py4web-start apps' from the Command Prompt / Terminal or directly from the GUI. 
+Just downoad the correct zip file and uncompress it on a folder. Goto that folder and run 'py4web-start' from the Command Prompt / Terminal.
 
 If you prefer to build them by yourself, see the specific README [for Windows](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_win.md) and [for Mac](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_mac.md).
