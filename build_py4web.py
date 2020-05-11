@@ -73,7 +73,6 @@ if os_version == 'Windows':
         shutil.move(os.path.join(source, files), 'dist')
     shutil.rmtree(source)
     os.unlink('dist/py4web-start.exe.manifest')
-    os.rename('dist/py4web-start.exe', 'dist/py4web.exe',)
 
     bin_folders = ['dist',]
 
@@ -88,7 +87,6 @@ elif os_version == 'Darwin':
     zip_filename = 'py4web_osx_'  + py4web_version
 
     shutil.move((os.path.join('dist', 'py4web-start')),(os.path.join('dist', 'py4web_cmd')))
-    os.rename('dist/py4web_cmd/py4web-start', 'dist/py4web_cmd/py4web',)
     
     bin_folders = [(os.path.join('dist', 'py4web_cmd'))]
 
