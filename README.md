@@ -11,7 +11,7 @@ Please, help with testing. Write the results directly to me (nicozanf@gmail.com)
 
 ## Why binaries versions?
 
-Using the binaries is much simpler and quicker if you're just learning web2py or testing your existing code with different python
+Using the binaries is much simpler and quicker if you're just learning py4web or testing your existing code with different python
 versions. For a newbie, even properly installing Python could be a nightmare! Also, in this way you're sure you don't risk any damage on
 your system and you can do it even if you're not an administrator.  
 But you should use the latest available Python version and the py4web sources (and possibly a full web server) for Production and
