@@ -23,7 +23,7 @@ Usage:
     
     python build_py4web.py
     
-    (tested with python 3.7.4 with PyInstaller 3.6)
+    (tested with python 3.7.4 with PyInstaller 4.0)
 """
 
 if len(sys.argv) != 1 or not os.path.isfile('py4web.py'):
