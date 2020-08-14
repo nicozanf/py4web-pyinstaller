@@ -1,5 +1,5 @@
 # py4web-pyinstaller
-How to make py4web binaries for Windows and MacOS with PY3 and pyinstaller
+How to make py4web binaries for Windows and MacOS with PY3 and PyInstaller
 
 The binaries contain Python 64 bit version 3.7.4 with all the needed modules
 and the py4web in the specified version. You don't need anything else to run them!
@@ -19,10 +19,10 @@ complex / unusual development.
 
 ## Status
 
-The binaries work fine, with no problem reported. The Mac version is CMD only; unfortunately the APP version is not working.
+The binaries work fine, with no problem reported. The Mac version is CMD only; unfortunately the APP version is still not working.
 
 ## How to use them
 
-Just downoad the correct zip file and uncompress it on a folder. Goto that folder and run 'py4web-start' from the Command Prompt / Terminal.
+Just downoad the needed zip file from the 'all_binaries' folder and uncompress it on a local folder. Go to that folder and run 'py4web-start set-password' and then 'py4web-start run' from the Command Prompt / Terminal.
 
 If you prefer to build them by yourself, see the specific README [for Windows](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_win.md) and [for Mac](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_mac.md).
