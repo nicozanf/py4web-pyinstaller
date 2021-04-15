@@ -93,7 +93,7 @@ elif os_version == 'Darwin':
 print("\npy4web binary successfully built!\n")
 
 # add data_files
-for req in ['README.md', 'requirements.txt']:
+for req in ['README.rst', 'requirements.txt']:
     for bin_folder in bin_folders:
         shutil.copy(req, os.path.join(bin_folder, req))
 # cleanup unuseful binary cache
