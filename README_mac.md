@@ -2,7 +2,7 @@
 1. Install Python 3 and py4web as usual. I've done it in Desktop/py4web with the "Try me (from source)" procedure and Python 3.8.6. It's better to use venv or a full VM ...
 
 1. install PyInstaller with:
-sudo -H pip3 install --upgrade pyinstaller  (I've got PyInstaller-4.2.tar.gz )
+sudo -H pip3 install --upgrade pyinstaller  (I've got PyInstaller-4.6)
 
 1. copy extras, build_py4web.py and py4web.win.spec from this repository to Desktop/py4web
 
