@@ -8,7 +8,7 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
 
 1. Install Python 3 and py4web as usual. I've done it in C:\py4web\ with the "Installing from source (locally)" procedure and Python 3.8.6. It's better to use venv or a full VM ...
 1. install PyInstaller with:  
-        pip install  --upgrade pyinstaller  (I've got PyInstaller-4.5.1)  
+        pip install  --upgrade pyinstaller  (I've got PyInstaller-4.10)  
 1. copy extras, build_py4web.py and py4web.win.spec from this repository to C:\py4web\
 1. (optional, for having a full working interactive shell) change the fake site.py module included within the PyInstaller installation with the content of the files web2py.site_37.py 
    from https://github.com/nicozanf/web2py-pyinstaller/blob/master/web2py.site_37.py - see comments inside that file for details. It work for Python 3.8, too.
