@@ -23,7 +23,11 @@ Usage:
     
     python build_py4web.py
     
-    (tested with python 3.7.4 with PyInstaller 4.0)
+    (tested with python 3.8.6 with PyInstaller 4.10)
+    
+Cleanup (in case of error during compilation):
+    Rename py4web-start.py to py4web.py
+    Delete the dist folder
 """
 
 if len(sys.argv) != 1 or not os.path.isfile('py4web.py'):
@@ -72,7 +76,8 @@ if os_version == 'Windows':
     for files in os.listdir(source):
         shutil.move(os.path.join(source, files), 'dist')
     shutil.rmtree(source)
-    os.unlink('dist/py4web-start.exe.manifest')
+    if os.path.exists('dist/py4web-start.exe.manifest'):
+        os.unlink('dist/py4web-start.exe.manifest')
 
     bin_folders = ['dist',]
 
