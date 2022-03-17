@@ -6,7 +6,7 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
 ## Full Windows build recipe
 
 
-1. Install Python 3 and py4web as usual. I've done it in C:\py4web\ with the "Installing from source (locally)" procedure and Python 3.8.6. It's better to use venv or a full VM ...
+1. Install Python 3 and py4web as usual. I've done it in C:\py4web\ with the "Installing from source (locally)" procedure and Python 3.9.10. It's better to use venv or a full VM ...
 1. install PyInstaller with:  
 
         pip install  --upgrade pyinstaller

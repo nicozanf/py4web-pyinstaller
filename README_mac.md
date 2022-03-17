@@ -1,5 +1,5 @@
 ## Full MacOs build recipe
-1. Install Python 3 and py4web as usual. I've done it in Desktop/py4web with the "Try me (from source)" procedure and Python 3.8.6. It's better to use venv or a full VM ...
+1. Install Python 3 and py4web as usual. I've done it in Desktop/py4web with the "Try me (from source)" procedure and Python 3.9.10. It's better to use venv or a full VM ...
 
 1. install PyInstaller with:
 

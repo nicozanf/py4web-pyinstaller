@@ -23,7 +23,7 @@ Usage:
     
     python build_py4web.py
     
-    (tested with python 3.8.6 with PyInstaller 4.10)
+    (tested with python 3.9.10 with PyInstaller 4.10)
     
 Cleanup (in case of error during compilation):
     Rename py4web-start.py to py4web.py
