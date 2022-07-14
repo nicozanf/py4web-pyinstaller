@@ -50,7 +50,7 @@ coll = COLLECT(exe,
                name='py4web-start')
 app = BUNDLE(coll,
              name='py4web_app.app',
-             icon='extras/icons/web2py.icns',
+             icon='extras/icons/py4web.icns',
              bundle_identifier=None,
              info_plist={
             'NSPrincipleClass': 'NSApplication',
