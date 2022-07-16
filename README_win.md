@@ -6,12 +6,12 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
 ## Full Windows build recipe
 
 
-1. Install Python 3 and py4web as usual. I've done it in C:\py4web\ with the "Installing from source (locally)" procedure and Python 3.9.10. It's better to use venv or a full VM ...
+1. Install Python 3 and py4web as usual. I've done it in C:\py4web\ with the "Installing from source (locally)" https://py4web.com/_documentation/static/en/chapter-03.html#installing-from-source-locally procedure and Python 3.9.10. It's better to use venv or a full VM ...
 1. install PyInstaller with:  
 
         pip install  --upgrade pyinstaller
         
-   (I've got PyInstaller-4.10)
+   (I've got PyInstaller-5.2)
         
 1. install psycopg2 with:
 
