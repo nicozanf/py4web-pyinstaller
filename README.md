@@ -23,6 +23,9 @@ The binaries work fine, with no problem reported. The Mac version is CMD only; u
 
 ## How to use them
 
-Just downoad the needed zip file from the 'last_binaries' folder and uncompress it on a local folder. Go to that folder and run 'py4web-start set-password' and then 'py4web-start run' from the Command Prompt / Terminal.
+Just downoad the needed zip file from the 'last_binaries' folder and uncompress it on a local folder. Open the Command Prompt / Terminal, go to that folder and run:
+
+* for Windows: 'py4web set-password' and then 'py4web run' 
+* for MacOs: './py4web set-password' and then './py4web run' 
 
 If you prefer to build them by yourself, see the specific README [for Windows](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_win.md) and [for Mac](https://github.com/nicozanf/py4web-pyinstaller/blob/master/README_mac.md).
