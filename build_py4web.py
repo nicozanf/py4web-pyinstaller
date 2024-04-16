@@ -1,6 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+
+# build_py4web.py
+#
+
+# v 2.0 20240409 nicozanf@gmail.com
+# changes for  _internal changes on Pyinstaller 6.0
+
+
 from distutils.core import setup
 #from gluon.import_all import base_modules, contributed_modules
 #from gluon.fileutils import readlines_file
@@ -23,12 +32,13 @@ Usage:
     
     python build_py4web.py
     
-    (tested with python 3.9.10 with PyInstaller 4.10)
+    (tested with python 3.12.3 with PyInstaller 6.5)
     
-Cleanup (in case of error during compilation):
-    Rename py4web-start.py to py4web.py
-    Delete the dist folder
 """
+
+#cleanup old runs if present
+if os.path.exists('dist'):
+    shutil.rmtree('dist')
 
 if len(sys.argv) != 1 or not os.path.isfile('py4web.py'):
     print(USAGE)
@@ -62,45 +72,36 @@ python_version = sys.version_info[:3]
 from py4web import __version__
 py4web_version = __version__
 
-# there is a problem with py4web.py that has the same name of the py4web folder/package
-# so we need to rename it before (and back to py4web at the end ...) in order to avoid
-# namespace problems at runtime
-os.rename('py4web.py', 'py4web-start.py')
 
 if os_version == 'Windows':
     print("\nBuilding binary py4web for Windows\n")
-    subprocess.call('pyinstaller --clean  py4web-start.win.spec')
+    subprocess.call('pyinstaller --clean  py4web.win.spec')
     zip_filename = 'py4web_win_' + py4web_version
+    if os.path.exists(zip_filename):
+        os.unlink(zip_filename)
 
-    source = 'dist/py4web-start/'
-    for files in os.listdir(source):
-        shutil.move(os.path.join(source, files), 'dist')
-    shutil.rmtree(source)
-    if os.path.exists('dist/py4web-start.exe.manifest'):
-        os.unlink('dist/py4web-start.exe.manifest')
-
-    bin_folders = ['dist',]
-
+    bin_folder = [(os.path.join('dist', 'py4web'))]
 
 elif os_version == 'Darwin':
     print("\nBuilding binary py4web for MacOS\n")
 
-    subprocess.call("pyinstaller --clean py4web-start.mac.spec", shell=True)
+    subprocess.call("pyinstaller --clean py4web.mac.spec", shell=True)
     # cleanup + move binary files to dist folder
-    #shutil.rmtree(os.path.join('dist', 'py4web'))
     shutil.rmtree('build')
     zip_filename = 'py4web_osx_'  + py4web_version
+    if os.path.exists(zip_filename):
+        os.unlink(zip_filename)
 
-    shutil.move((os.path.join('dist', 'py4web-start')),(os.path.join('dist', 'py4web_cmd')))
+    # shutil.move((os.path.join('dist', 'py4web')),(os.path.join('dist', 'py4web_cmd')))
     
-    bin_folders = [(os.path.join('dist', 'py4web_cmd'))]
+    bin_folder = [(os.path.join('dist', 'py4web'))]
+    shutil.rmtree(os.path.join('dist', 'py4web_app.app')) # app is not working
 
 print("\npy4web binary successfully built!\n")
 
 # add data_files
-for req in ['README.rst', 'requirements.txt']:
-    for bin_folder in bin_folders:
-        shutil.copy(req, os.path.join(bin_folder, req))
+for req in ['README.rst', 'CONTRIBUTORS.rst', 'LICENSE.md',]:
+    shutil.copy(req, os.path.join(*bin_folder, req))
 # cleanup unuseful binary cache
 for dirpath, dirnames, files in os.walk('.'):
     if dirpath.endswith('__pycache__'):
@@ -112,27 +113,29 @@ for dirpath, dirnames, files in os.walk('.'):
             print('Deleting cached binary file : %s' % file)
             os.unlink(os.path.join(dirpath, file))
         
-print("\nPreparing package ...")
+print("\nPreparing ZIP package ...")
 # misc
-for folders in ['py4web', 'extras', 'deployment_tools', 'apps', 'tests']:
-    for bin_folder in bin_folders:
-        shutil.copytree(folders, os.path.join(bin_folder, folders))
-        if not os.path.exists(os.path.join(bin_folder, 'logs')):
-             os.mkdir(os.path.join(bin_folder, 'logs'))
+internal = [(os.path.join(*bin_folder, '_internal'))] # this is the subfolder with all binaries on Pyinstaller >= 6.0
 
+shutil.copytree('py4web', os.path.join(*internal, 'py4web'))
+shutil.copytree('extras', os.path.join(*internal, 'extras'))
+shutil.copytree('apps', os.path.join(*bin_folder, 'apps'))
 
 # create a py4web folder & copy dist's files into it
-shutil.copytree('dist', 'zip_temp/py4web')
+shutil.copytree('dist/py4web', 'zip_temp/py4web')
+
 # create zip file
 zipf = zipfile.ZipFile(zip_filename + ".zip",
                         "w", compression=zipfile.ZIP_DEFLATED)
 # just temp so the py4web directory is included in our zip file
 path = 'zip_temp'
+#os.mkdir(os.path.join(path, 'logs'))
+
 # leave the first folder as None, as path is root.
 recursive_zip(zipf, path)
 zipf.close()
 shutil.rmtree('zip_temp')
-shutil.rmtree('dist')
+#shutil.rmtree('dist')
 
 print('... Done!\n')
 print("\n\nYour binary version of py4web can be found in " + \
@@ -140,4 +143,3 @@ print("\n\nYour binary version of py4web can be found in " + \
 print("You may extract the archive anywhere and then run py4web without worrying about module dependencies")
 print("\nEnjoy binary py4web " + py4web_version + "\n with embedded Python " + sys.version + "\n")
 
-os.rename('py4web-start.py', 'py4web.py')
