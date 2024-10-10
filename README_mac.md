@@ -1,22 +1,22 @@
 ## Full MacOs build recipe
-1. Install Python 3 from https://python.org (using admin priviledges and adding python.exe to the path) - I've got Python 3.12.3.
+1. Install Python 3 from https://python.org (using admin priviledges and adding python.exe to the path) - I've got Python 3.12.7.
 1. Install py4web as usual - I've done it in Desktop/py4web with the "Try me (from source - locally)" https://py4web.com/_documentation/static/en/chapter-03.html#installing-from-source-locally procedure. It's better to use venv or a full VM ...
 
 1. install PyInstaller with:
 
            sudo -H pip3 install --upgrade pyinstaller
 
-(I've got PyInstaller-6.6)
+(I've got PyInstaller-6.10)
 
 1. install psycopg2 with:
 
-        pip install  --upgrade psycopg2-binary
+        pip3 install  --upgrade psycopg2-binary
         
    (if you don't need the PostgreSQL database adapter, you can avoit this - but also remove any related reference from inside the .spec file later)
 
 1. install the dateutil module with:
 
-        pip install  --upgrade python-dateutil
+        pip3 install  --upgrade python-dateutil
         
    (it's needed by some py4web tutorial, you can avoit this - but also remove any related reference from inside the .spec file later)
 
