@@ -6,7 +6,7 @@
 
            sudo -H pip3 install --upgrade pyinstaller
 
-(I've got PyInstaller-6.10)
+(I've got PyInstaller-6.11)
 
 1. install psycopg2 with:
 
@@ -22,9 +22,15 @@
 
 1. copy extras, build_py4web.py and py4web.mac.spec from this repository to Desktop/py4web
 
+1. copy py4web-gui.py from https://github.com/nicozanf/py4web-gui to Desktop/py4web
+   
+1. install py4web-gui requirements with:
+
+        pip3 install  --upgrade psutil tomlkit
+
 1. open a Terminal and go to Desktop\py4web. Run:
 
-python3 build_py4web.py
+        python3 build_py4web.py
 
 If everything goes fine, you'll obtain the 64 bit binary build zipped as Desktop/py4web\py4web_osx_versionxxxx.zip.
 

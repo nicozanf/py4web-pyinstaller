@@ -13,7 +13,7 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
 
         pip install  --upgrade pyinstaller
         
-   (I've got PyInstaller-6.10)
+   (I've got PyInstaller-6.11)
         
 1. install the dateutil module with:
 
@@ -26,6 +26,14 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
         
    (if you don't need the PostgreSQL database adapter, you can also avoid this - but also remove any related reference from inside the .spec file later)
 1. copy extras, build_py4web.py and py4web.win.spec from this repository to C:\py4web\
+
+
+1. copy py4web-gui.py from https://github.com/nicozanf/py4web-gui to C:\py4web\
+   
+1. install py4web-gui requirements with:
+
+        pip3 install  --upgrade psutil tomlkit
+
 1. open a CMD and go to C:\py4web. Run:
 
     python build_py4web.py

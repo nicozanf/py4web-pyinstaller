@@ -6,7 +6,8 @@
 # build_py4web.py
 #
 
-# v 2.0 20240409 nicozanf@gmail.com
+# v 2.4 20241024 nicozanf@gmail.com
+# changes for py4web-gui
 # changes for  _internal changes on Pyinstaller 6.0
 
 
@@ -32,7 +33,7 @@ Usage:
     
     python build_py4web.py
     
-    (tested with python 3.12.3 with PyInstaller 6.5)
+    (tested with python 3.12.7 with PyInstaller 6.11.0)
     
 """
 
@@ -74,8 +75,11 @@ py4web_version = __version__
 
 
 if os_version == 'Windows':
-    print("\nBuilding binary py4web for Windows\n")
+    print("\nBuilding binary py4web-gui for Windows\n")
+    subprocess.call('pyinstaller --clean  py4web-gui.win.spec')
+    print("\n\nBuilding binary py4web-gui for Windows\n")
     subprocess.call('pyinstaller --clean  py4web.win.spec')
+
     zip_filename = 'py4web_win_' + py4web_version
     if os.path.exists(zip_filename):
         os.unlink(zip_filename)
@@ -83,11 +87,17 @@ if os_version == 'Windows':
     bin_folder = [(os.path.join('dist', 'py4web'))]
 
 elif os_version == 'Darwin':
-    print("\nBuilding binary py4web for MacOS\n")
+    print("\nBuilding binary py4web-gui for MacOS\n")
 
+    subprocess.call("pyinstaller --clean py4web-gui.mac.spec", shell=True)    shutil.rmtree('build')
+    #shutil.move((os.path.join('dist', 'py4web-gui.app')),(os.path.join('extras', 'py4web_cmd')))
+    
+    print("\nBuilding binary py4web for MacOS\n")
     subprocess.call("pyinstaller --clean py4web.mac.spec", shell=True)
     # cleanup + move binary files to dist folder
     shutil.rmtree('build')
+        sys.exit(1)
+
     zip_filename = 'py4web_osx_'  + py4web_version
     if os.path.exists(zip_filename):
         os.unlink(zip_filename)
@@ -96,6 +106,10 @@ elif os_version == 'Darwin':
     
     bin_folder = [(os.path.join('dist', 'py4web'))]
     shutil.rmtree(os.path.join('dist', 'py4web_app.app')) # app is not working
+    
+    os.makedirs('dist/py4web_cmd/docs', exist_ok=True)
+
+
 
 print("\npy4web binary successfully built!\n")
 
@@ -121,8 +135,38 @@ shutil.copytree('py4web', os.path.join(*internal, 'py4web'))
 shutil.copytree('extras', os.path.join(*internal, 'extras'))
 shutil.copytree('apps', os.path.join(*bin_folder, 'apps'))
 
+shutil.copytree(os.path.join('docs', 'images'), os.path.join('dist', 'py4web','docs', 'images'))
+
+if os_version == 'Darwin':
+    shutil.copytree(os.path.join('dist', 'py4web-gui.app'), os.path.join('dist', 'py4web', 'py4web-gui.app'))
+    for req in ['README.rst', 'CONTRIBUTORS.rst', 'LICENSE.md', '_internal', 'apps', 'docs', 'py4web', ]:
+        shutil.move((os.path.join('dist', 'py4web', req)),(os.path.join('dist', 'py4web', 'py4web-gui.app', 'Contents')))
+    shutil.move((os.path.join('dist', 'py4web', 'py4web-gui.app', 'Contents', '_internal', 'py4web')),(os.path.join('dist', 'py4web', 'py4web-gui.app', 'Contents', 'Frameworks')))
+        
+
+else:
+    shutil.copy(os.path.join('dist', 'py4web-gui', 'py4web-gui.exe'), os.path.join('dist', 'py4web', 'py4web-gui.exe'))
+
 # create a py4web folder & copy dist's files into it
 shutil.copytree('dist/py4web', 'zip_temp/py4web')
+
+if os_version == 'Darwin':
+    int_src = os.path.join('zip_temp',  'py4web', 'py4web-gui.app', 'Contents', '_internal')
+    int_des = os.path.join('zip_temp',  'py4web', 'py4web-gui.app', 'Contents', 'Frameworks')
+    if os.path.exists(int_src):
+        print(f"esiste 0!")
+    else:
+        print(f"NON esiste 0!")
+     
+    shutil.rmtree(int_src)
+    if os.path.exists(int_src):
+        print(f"esiste!")
+    else:
+        print(f"NON esiste!")
+        subprocess.call("ln -s zip_temp/py4web/py4web-gui.app/Contents/Frameworks zip_temp/py4web/py4web-gui.app/Contents/_internal", shell=True)
+        #os.symlink(int_des,int_src)
+    if os.path.exists(int_src):
+        print(f"esiste numero 2!")
 
 # create zip file
 zipf = zipfile.ZipFile(zip_filename + ".zip",
@@ -134,7 +178,7 @@ path = 'zip_temp'
 # leave the first folder as None, as path is root.
 recursive_zip(zipf, path)
 zipf.close()
-shutil.rmtree('zip_temp')
+#shutil.rmtree('zip_temp')
 #shutil.rmtree('dist')
 
 print('... Done!\n')
