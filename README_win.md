@@ -25,7 +25,7 @@ the free and official Microsoft "Visual C++ Redistributable for Visual Studio".
         pip install  --upgrade psycopg2-binary
         
    (if you don't need the PostgreSQL database adapter, you can also avoid this - but also remove any related reference from inside the .spec file later)
-1. copy extras, build_py4web.py and py4web.win.spec from this repository to C:\py4web\
+1. copy extras, build_py4web.py, py4web-gui.win.spec and py4web.win.spec from this repository to C:\py4web\
 
 
 1. copy py4web-gui.py from https://github.com/nicozanf/py4web-gui to C:\py4web\

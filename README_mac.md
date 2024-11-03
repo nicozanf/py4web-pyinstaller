@@ -20,7 +20,7 @@
         
    (it's needed by some py4web tutorial, you can avoit this - but also remove any related reference from inside the .spec file later)
 
-1. copy extras, build_py4web.py and py4web.mac.spec from this repository to Desktop/py4web
+1. copy extras, build_py4web.py, py4web-gui.mac.spec and py4web.mac.spec from this repository to Desktop/py4web
 
 1. copy py4web-gui.py from https://github.com/nicozanf/py4web-gui to Desktop/py4web
    

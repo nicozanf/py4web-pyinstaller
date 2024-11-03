@@ -31,6 +31,9 @@ Small issues:
 
 Just downoad the needed zip file from the 'last_binaries' folder and uncompress it on a local folder. Then, simply run the py4web-gui application!
 
+
+![Icon](./extras/logo.png?raw=true "Main program") 
+
 If you prefer to use the Command Prompt / Terminal, go to that folder (on MacOs, also inside the app with 'cd py4web-gui.app/Contents' ).
 
 The run:
